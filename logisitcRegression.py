@@ -85,8 +85,65 @@ class LogisticRegressionModel:
                 new_weights = arrayAddition(new_weights, arrayMultiplication(-1*self.learning_rate, gradients))
             if average_cost(new_weights,self.y) >= average_cost(self.weights, self.y):
                 self.weights = new_weights
-        return self.weights
             
 
-data=imported("pvalue_test2.xlsx")
-print(all_data)
+train_data=imported("pvalue_test2.xlsx")
+test_data = #some method
+
+damage_level_train_list = #some method
+damage_level_test_list = #some method
+
+y1 = []
+for i in range(len(train_data)):
+    if damage_level_train_list[i] == 1:
+        y1.append(1)
+    else:
+        y1.append(0)
+model1 = LogisticRegressionModel(train_data, num_iterations = 1000, learning_rate = .05, model_number=1, y= y1)
+model1.gradient_descent()
+
+y2 = []
+for i in range(len(train_data)):
+    if damage_level_train_list[i] == 2:
+        y2.append(1)
+    else:
+        y2.append(0)
+model2 = LogisticRegressionModel(train_data, num_iterations = 1000, learning_rate = .05, model_number=2, y= y2)
+model2.gradient_descent()
+
+y3 = []
+for i in range(len(train_data)):
+    if damage_level_train_list[i] == 3:
+        y3.append(1)
+    else:
+        y3.append(0)
+model3 = LogisticRegressionModel(train_data, num_iterations = 1000, learning_rate = .05, model_number=3, y= y3)
+model3.gradient_descent()
+
+y4 = []
+for i in range(len(train_data)):
+    if damage_level_train_list[i] == 4:
+        y2.append(1)
+    else:
+        y2.append(0)
+model4 = LogisticRegressionModel(train_data, num_iterations = 1000, learning_rate = .05, model_number=4, y= y4)
+model4.gradient_descent()
+
+number_correct = 0
+for m in range(len(test_data))
+    prob1 = logti_function(dot_product(model1.weights, test_data[m]))
+    prob2 = logti_function(dot_product(model2.weights, test_data[m]))
+    prob3 = logti_function(dot_product(model3.weights, test_data[m]))
+    prob4 = logti_function(dot_product(model4.weights, test_data[m]))
+    predict_index = 0
+    max_prob = prob1
+    predictions = [prob1, prob2, prob3, prob4]
+    for index in range(1,len(predictions)):
+        if predictions[index] > max_prob:
+            predict_index = index
+            max_prob = predictions[index]
+    prediction = predict_index + 1
+    if damage_level_test_list[m] == prediction:
+        number_correct += 1
+
+print(number_correct/len(test_data))
