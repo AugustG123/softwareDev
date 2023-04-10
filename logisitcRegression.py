@@ -54,6 +54,11 @@ def random_list(length):
         array.append(100.0 * random.random())
     return array
 
+def delete_a_column(array, row): #input row in index form  
+    for i in range(len(array)):
+        array[i].pop(row)
+    return array
+
 
 class LogisticRegressionModel:
 
@@ -89,10 +94,11 @@ class LogisticRegressionModel:
 reader = csv.reader(open('Biomarkers-Blood Cells-EPCs for analysis ML.csv'))
 inputList = []
 targetList = []
-number_of_Nan = 1847 * [0]
+all_Nan = []
 o = 0
 for row in reader:
   li = []
+  row_Nan = []
   if o > 216:
     break
   if o == 0:
@@ -102,16 +108,31 @@ for row in reader:
   for value in row:
     try:
       li.append(float(value))
+      row_Nan.append(0)
     except:
       li.append(None)
-      number_of_Nan[index] += 1
+      row_Nan.append(1)
     index += 1
   try:
     inputList.append(li[2:])
     targetList.append(li[1])
+    all_Nan.append(row_Nan[2:])
   except:
     print(li)
   o += 1
+
+nan_per_parameter = []
+for l in range(len(all_Nan[0])):
+    total_Nan = 0
+    for p in range(len(all_Nan)):
+        total_Nan += all_Nan[p][l]
+    nan_per_parameter.append(total_Nan)
+
+num_columns_deleted = 0
+for r in range(len(nan_per_parameter)):
+    if nan_per_parameter[r] >= .1 * len(all_Nan):
+        inputList = delete_a_column(inputList, r-num_colums_deleted)
+        
 
 
 
