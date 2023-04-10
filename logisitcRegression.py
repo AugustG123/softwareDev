@@ -132,6 +132,7 @@ num_columns_deleted = 0
 for r in range(len(nan_per_parameter)):
     if nan_per_parameter[r] >= .1 * len(all_Nan):
         inputList = delete_a_column(inputList, r-num_colums_deleted)
+        num_columns_deleted += 1
         
 
 
