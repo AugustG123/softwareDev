@@ -1,11 +1,10 @@
 import torch
 import numpy as np
 import openpyxl as xl
+import csv
 
-print("hello")
-all_data
 
-def imported(filename):
+#def imported(filename):
     wb = xl.open_workbook(filename)
     sheet = wb.active
     all_data=np.empty(sheet.max_row, sheet.max_col)
@@ -86,6 +85,35 @@ class LogisticRegressionModel:
             if average_cost(new_weights,self.y) >= average_cost(self.weights, self.y):
                 self.weights = new_weights
             
+
+reader = csv.reader(open('Biomarkers-Blood Cells-EPCs for analysis ML.csv'))
+inputList = []
+targetList = []
+number_of_Nan = 1847 * [0]
+o = 0
+for row in reader:
+  li = []
+  if o > 216:
+    break
+  if o == 0:
+    o += 1
+    continue
+  index = -2
+  for value in row:
+    try:
+      li.append(float(value))
+    except:
+      li.append(None)
+      number_of_Nan[index] += 1
+    index += 1
+  try:
+    inputList.append(li[2:])
+    targetList.append(li[1])
+  except:
+    print(li)
+  o += 1
+
+
 
 train_data=imported("pvalue_test2.xlsx")
 test_data = #some method
